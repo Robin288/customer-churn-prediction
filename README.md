@@ -1,83 +1,100 @@
+<div align="center">
+
 # Customer Churn Prediction
 
-### A deep learning project for spotting telecom customers at risk of leaving
+### Finding the customers who may be ready to leave
 
-This project explores whether a customer is likely to churn using account, service, and billing information from the IBM Telco Customer Churn dataset. It follows the full modeling workflow—from data exploration and preparation to neural network training and evaluation—and compares a small multi-layer perceptron built with NumPy against Keras models with different hidden-layer activations.
+An end-to-end deep learning study on telecom customer churn, with a neural network built from scratch in **NumPy** and activation-function experiments in **TensorFlow / Keras**.
 
-<p align="center">
-  <strong>Dataset:</strong> 7,043 customer records &nbsp;·&nbsp;
-  <strong>Task:</strong> Binary classification &nbsp;·&nbsp;
-  <strong>Best reported ROC-AUC:</strong> 0.838
-</p>
+<br />
 
-## Project files
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat-square&logo=python&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-MLP-013243?style=flat-square&logo=numpy&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-FF6F00?style=flat-square&logo=tensorflow&logoColor=white)
+![Task](https://img.shields.io/badge/Task-Binary%20classification-5B6CFF?style=flat-square)
 
-| File | What you'll find |
-| --- | --- |
-| [`Untitled7 (1).ipynb`](Untitled7%20%281%29.ipynb) | Exploratory analysis, preprocessing, NumPy MLP, Keras experiments, and evaluation plots |
-| [`Customer_Churn_Prediction_Project_Report.docx`](Customer_Churn_Prediction_Project_Report.docx) | Written project report |
-| [`Customer_Churn_Prediction_Presentation.pptx`](Customer_Churn_Prediction_Presentation.pptx) | Project presentation and results |
+<br />
 
-## What the project does
+**7,043 customers** &nbsp; · &nbsp; **19 input attributes** &nbsp; · &nbsp; **0.838 reported ROC-AUC**
 
-1. Explores the customer and churn distributions, numerical features, and categorical features.
-2. Removes the customer identifier and converts blank `TotalCharges` values to zero.
-3. Encodes categorical features, separates the target, and creates a stratified train/test split.
-4. Scales the features and applies SMOTE to the training split to address class imbalance.
-5. Trains a feed-forward neural network implemented from scratch with NumPy.
-6. Trains Keras MLP variants using ReLU, Tanh, and Sigmoid hidden-layer activations.
-7. Compares accuracy, precision, recall, ROC-AUC, and training behavior.
+</div>
 
-## Reported results
+---
 
-The project presentation reports the Sigmoid Keras model as the strongest of the tested activation variants:
+## The project
 
-| Metric | Reported result |
-| --- | ---: |
-| Accuracy | 77.4% |
-| Precision | 56.1% |
-| Recall | 67.6% |
-| ROC-AUC | 0.838 |
+Customer churn is a classification problem with a practical goal: identify customers who may cancel so a retention team can decide where to focus. This project uses the IBM Telco Customer Churn dataset to explore that problem and compare compact neural network models.
 
-These are the values reported in the accompanying presentation; run the notebook to reproduce the experiments in your own environment. Results can vary with library versions and runtime settings.
+The notebook covers data exploration, preprocessing, class balancing, model training, and evaluation. It includes a manually implemented NumPy MLP alongside Keras models using **ReLU**, **Tanh**, and **Sigmoid** hidden-layer activations.
 
-## Getting started
+## Results at a glance
 
-### Requirements
+The project presentation reports the Sigmoid Keras model as the top activation variant:
 
-The notebook uses Python and the following packages:
+<div align="center">
 
-- NumPy and pandas
-- Matplotlib and Seaborn
-- scikit-learn
-- imbalanced-learn
-- TensorFlow
-- XGBoost
+| Accuracy | Precision | Recall | ROC-AUC |
+|:---:|:---:|:---:|:---:|
+| **77.4%** | **56.1%** | **67.6%** | **0.838** |
 
-Install the packages in a Python environment with:
+</div>
+
+These are the reported project results. Run the notebook to reproduce the experiments; metrics may vary with the runtime and package versions.
+
+## The workflow
+
+| Stage | What happens |
+|:--|:--|
+| **Explore** | Inspect churn balance, feature distributions, and relationships between numerical variables. |
+| **Prepare** | Remove the customer ID, handle blank `TotalCharges`, encode categories, and create a stratified train/test split. |
+| **Balance** | Scale the features and apply SMOTE to the training split. |
+| **Build** | Train a NumPy MLP from scratch and Keras MLP variants with three hidden-layer activations. |
+| **Compare** | Review accuracy, precision, recall, ROC-AUC, and training curves. |
+
+## Repository
+
+| File | Description |
+|:--|:--|
+| [`Model.ipynb`](Model.ipynb) | Full analysis, preprocessing, training, and evaluation notebook. |
+| [`README.md`](README.md) | Project overview and instructions. |
+
+## Run it yourself
+
+### 1. Set up Python
+
+```bash
+python -m venv .venv
+```
+
+Activate the environment, then install the notebook dependencies:
 
 ```bash
 python -m pip install numpy pandas matplotlib seaborn scikit-learn imbalanced-learn tensorflow xgboost jupyter
 ```
 
-### Dataset
+### 2. Add the dataset
 
-The notebook expects the Telco Customer Churn CSV named `WA_Fn-UseC_-Telco-Customer-Churn.csv`. The dataset is not included in this repository. Obtain it from the IBM Telco Customer Churn dataset source, then update the CSV path in the notebook's data-loading cell. The current path, `/content/WA_Fn-UseC_-Telco-Customer-Churn.csv`, is set up for Google Colab.
+The notebook expects a CSV named `WA_Fn-UseC_-Telco-Customer-Churn.csv`. The dataset is not included here. Place your copy where the notebook can access it, then update the `pd.read_csv(...)` path in the data-loading cell. Its current path, `/content/WA_Fn-UseC_-Telco-Customer-Churn.csv`, is configured for Google Colab.
 
-### Run the notebook
+### 3. Open the notebook
 
 ```bash
-jupyter notebook "Untitled7 (1).ipynb"
+jupyter notebook Model.ipynb
 ```
 
-In Google Colab, upload or mount the dataset at the path used by the notebook, then run the cells from top to bottom. For local use, change the `pd.read_csv(...)` path to the location of your CSV file.
+Run the cells from top to bottom. The notebook writes `encoder.pkl` when its categorical encoding cell runs.
 
-## Notes on the workflow
+## A few implementation details
 
-- The test set is stratified and SMOTE is applied to the training data after the split.
-- The notebook saves categorical encoders as `encoder.pkl` when that cell runs.
-- The project is an educational modeling exercise. Its results are not a guarantee of performance on other customer populations or future data.
+- The train/test split is stratified and uses a fixed random seed.
+- SMOTE is applied to the training data after the split; the test set remains unresampled.
+- The target is `Churn`, with `Yes` encoded as 1 and `No` as 0.
+- This is an educational project. Results on this dataset do not guarantee performance on other customer populations or future data.
 
 ## Credits
 
-Created as a Semester 5 B.Tech Computer Science and Engineering Deep Learning project at Sri Sri University. The project materials credit Sritam Mishra, Binayak Bhoi, Dhruv Dash, and Sarthak Kumar Patel, with guidance from Mr. Yugnash.
+Semester 5 B.Tech Computer Science and Engineering Deep Learning project at Sri Sri University.
+
+**Project team:** Sritam Mishra · Binayak Bhoi · Dhruv Dash · Sarthak Kumar Patel
+
+**Guided by:** Mr. Yugnash
